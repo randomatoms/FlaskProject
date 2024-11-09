@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking</title>
+</head>
+<body>
+    <header>
+        <h1>Booking Page</h1>
+    </header>
+    <div class="container">
+        <h2>Available Events</h2>
+        <form method="post">
+            <label for="event">Select Event:</label><br>
+            <select id="event" name="event_id">
+                {% for event in events %}
+                <option value="{{ event.id }}">{{ event.name }} - {{ event.date }} at {{ event.time }}</option>
+                {% endfor %}
+            </select><br>
+            <input type="submit" value="Book Event">
+        </form>
+    </div>
+</body>
+</html>

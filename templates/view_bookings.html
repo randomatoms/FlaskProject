@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Bookings</title>
+    <style>
+        /* Add your styles here */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>View Bookings</h1>
+    </header>
+    <div class="container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Service</th>
+            </tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.name }}</td>
+                <td>{{ booking.email }}</td>
+                <td>{{ booking.date }}</td>
+                <td>{{ booking.time }}</td>
+                <td>{{ booking.service }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
