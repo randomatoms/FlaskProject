@@ -1,0 +1,111 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #b30000;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+.navbar {
+    background-color: #b30000;
+    overflow: hidden;
+    text-align: center; /* Center the nav links */
+}
+.navbar a {
+    display: inline-block; /* Make links inline-block for centering */
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.navbar a:hover {
+    background-color: #a10000;
+}
+.profile {
+    position: fixed; /* Pin to the top right */
+    top: 10px;
+    right: 20px; /* Add some spacing from the side */
+    z-index: 1;
+}
+.profile-icon {
+    width: 40px; /* Size adjustments */
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    color: #b30000;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    right: 0;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+.profile:hover .dropdown-content {
+    display: block; /* Show only when hovering over the profile icon */
+}
+.container {
+    width: 50%;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 50px;
+}
+label {
+    display: block;
+    margin-top: 10px;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    background-color: #b30000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+button:hover {
+    background-color: #a10000;
+}
+nav {
+    text-align: center;
+    margin-top: 20px;
+}
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #b30000;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+.error {
+    color: red;
+    margin-top: 10px;
+}
