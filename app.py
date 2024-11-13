@@ -20,15 +20,17 @@ db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-# Define the Login model for the database   
+# Define the Login model with a role column
 class Login(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
+    role = db.Column(db.String(50), nullable=False, default='user')  # Default role is 'user'
 
     def __repr__(self):
-        return f"Login('{self.name}', '{self.email}')"
+        return f"Login('{self.name}', '{self.email}', '{self.role}')"
+
 
 # Define the Message model for the database
 class Message(db.Model):
@@ -64,6 +66,23 @@ class Event(db.Model):
     def __repr__(self):
         return f"Event('{self.name}', '{self.date}', '{self.time}')"
 
+# # ONE TIME ROUTE TO ADD NEW COLUMN
+# from sqlalchemy import text
+
+# @app.route('/add_role_column')
+# def add_role_column():
+#     # Use raw SQL to check and add the role column if it doesn't exist
+#     with db.engine.connect() as conn:
+#         # Run PRAGMA to retrieve table info
+#         result = conn.execute(text("PRAGMA table_info(login);")).fetchall()
+#         column_names = [column[1] for column in result]  # Get the column names
+
+#         if 'role' not in column_names:
+#             # Add the 'role' column with a default value if it doesn't exist
+#             conn.execute(text('ALTER TABLE login ADD COLUMN role TEXT DEFAULT "user";'))
+#             return "Role column added successfully!"
+        
+#         return "Role column already exists."
 
 # Load the user
 @login_manager.user_loader
@@ -127,13 +146,17 @@ def login():
         user = Login.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):  # Verify the hashed password
             login_user(user)
-            if email == 'admin@coderdojo.com'.lower():  # Replace with your admin email
+            
+            # Check the user's role and redirect accordingly
+            if user.role == 'admin':  # Check if the user is an admin
                 return redirect(url_for('admin_dashboard'))  # Redirect to admin dashboard if admin
-            return redirect(url_for('home'))
+            return redirect(url_for('home'))  # Regular user goes to home page
+            
         else:
             return render_template('login.html', error='Invalid email or password')
 
     return render_template('login.html')
+
 
 @app.route('/booking', methods=['GET', 'POST'])
 @login_required
@@ -158,7 +181,7 @@ def booking():
 @app.route('/add_event', methods=['GET', 'POST'])
 @login_required
 def add_event():
-    if current_user.email != 'admin@coderdojo.com':  # Ensure only admin can access
+    if current_user.role != 'admin':  # Ensure only admin can access
         return redirect(url_for('home'))
     if request.method == 'POST':
         name = request.form['name']
@@ -178,7 +201,7 @@ def add_event():
 @app.route('/manage_users')
 @login_required
 def manage_users():
-    if not current_user.email == 'admin@coderdojo.com':
+    if not current_user.role == 'admin':
         return redirect(url_for('home'))
     users = Login.query.all()
     return render_template('manage_users.html', users=users)
@@ -186,7 +209,7 @@ def manage_users():
 @app.route('/view_messages')
 @login_required
 def view_messages():
-    if not current_user.email == 'admin@coderdojo.com':
+    if not current_user.role == 'admin':
         return redirect(url_for('home'))
     messages = Message.query.all()
     return render_template('view_messages.html', messages=messages)
@@ -194,7 +217,7 @@ def view_messages():
 @app.route('/view_bookings')
 @login_required
 def view_bookings():
-    if not current_user.email == 'admin@coderdojo.com':
+    if not current_user.role == 'admin':
         return redirect(url_for('home'))
     bookings = Booking.query.all()
     return render_template('view_bookings.html', bookings=bookings)
@@ -202,7 +225,7 @@ def view_bookings():
 @app.route('/delete_booking/<int:booking_id>', methods=['POST'])
 @login_required
 def delete_booking(booking_id):
-    if current_user.email != 'admin@coderdojo.com':  # Ensure only admin can delete bookings
+    if current_user.role != 'admin':  # Ensure only admin can delete bookings
         return redirect(url_for('home'))
     booking = Booking.query.get(booking_id)
     if booking:
@@ -214,7 +237,7 @@ def delete_booking(booking_id):
 @app.route('/manage_events')
 @login_required
 def manage_events():
-    if current_user.email != 'admin@coderdojo.com':  # Ensure only admin can access
+    if current_user.role != 'admin':  # Ensure only admin can access
         return redirect(url_for('home'))
     events = Event.query.all()
     return render_template('manage_events.html', events=events)
@@ -222,7 +245,7 @@ def manage_events():
 @app.route('/delete_event/<int:event_id>', methods=['POST'])
 @login_required
 def delete_event(event_id):
-    if current_user.email != 'admin@coderdojo.com':  # Ensure only admin can delete events
+    if current_user.role != 'admin':  # Ensure only admin can delete events
         return redirect(url_for('home'))
     event = Event.query.get(event_id)
     if event:
@@ -239,8 +262,29 @@ def logout():
 @app.route('/admin')
 @login_required
 def admin_dashboard():
-    # You can add additional admin-specific checks here if needed
+    # Ensure only admins can access this route
+    if current_user.role != 'admin':
+        return redirect(url_for('home'))
     return render_template('admin_dashboard.html')
+
+@app.route('/change_role/<int:user_id>', methods=['POST'])
+@login_required
+def change_role(user_id):
+    user = Login.query.get(user_id)
+    if user:
+        new_role = request.form['role']
+        user.role = new_role
+        db.session.commit()
+        flash(f'Role updated to {new_role} for {user.name}', 'success')
+    else:
+        flash('User not found!', 'error')
+    return redirect(url_for('manage_users'))
+
+@app.route('/test_flash')
+def test_flash():
+    flash('This is a test flash message!', 'success')
+    return redirect(url_for('home'))
+
 
 # Run the app if this script is executed directly
 if __name__ == '__main__':

@@ -118,3 +118,29 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #003366;
 }
+
+/* Popup Style */
+.flash-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #28a745;  /* Green for success */
+    color: white;
+    border-radius: 5px;
+    display: none;  /* Hidden by default */
+    z-index: 9999;
+    max-width: 400px;
+    text-align: center;
+    transition: opacity 0.3s ease-in-out; /* Smooth fade effect */
+}
+.flash-message.error {
+    background-color: #dc3545;  /* Red for error */
+}
+.flash-message.success {
+    background-color: #28a745;  /* Green for success */
+}
+.flash-message.info {
+    background-color: #17a2b8;  /* Blue for info */
+}
