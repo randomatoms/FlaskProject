@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Events</title>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
 </head>
 <body>
     <header>
@@ -18,30 +19,42 @@
         <a href="{{ url_for('logout') }}">Logout</a>
     </div>
     <div class="container">
+        <!-- Flash Message Popup -->
+        <div id="flashMessage" class="flash-message"></div>
+
+        <h2>Events List</h2>
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Action</th>
-            </tr>
-            {% for event in events %}
-            <tr>
-                <td>{{ event.id }}</td>
-                <td>{{ event.name }}</td>
-                <td>{{ event.description }}</td>
-                <td>{{ event.date }}</td>
-                <td>{{ event.time }}</td>
-                <td>
-                    <form action="{{ url_for('delete_event', event_id=event.id) }}" method="post">
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                    <tr>
+                        <td>{{ event.id }}</td>
+                        <td>{{ event.name }}</td>
+                        <td>{{ event.description }}</td>
+                        <td>{{ event.date }}</td>
+                        <td>{{ event.time }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('delete_event', event_id=event.id) }}">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
         </table>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Your Company</p>
     </div>
 </body>
 </html>

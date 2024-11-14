@@ -10,7 +10,14 @@
     <header>
         <h1>Manage Users</h1>
     </header>
-
+    <div class="navbar">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('booking') }}">Booking</a>
+        <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
     <div class="container">
         <!-- Flash Message Popup -->
         <div id="flashMessage" class="flash-message"></div>
@@ -47,31 +54,33 @@
     </div>
 
     <div class="footer">
-        <p>&copy; 2024 Your Company</p>
+        <p>&copy; 2024 Flask Project</p>
     </div>
 
     <script>
         // Display flash messages
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    const flashMessage = document.getElementById('flashMessage');
-                    flashMessage.textContent = message;
-                    flashMessage.classList.add(category); // Add the category as a class (success/error/info)
-                    flashMessage.style.display = 'block'; // Show the message
+        window.addEventListener('DOMContentLoaded', (event) => {
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        const flashMessage = document.getElementById('flashMessage');
+                        flashMessage.textContent = "{{ message }}";
+                        flashMessage.classList.add("{{ category }}");
+                        flashMessage.style.display = 'block';
 
-                    // Automatically hide after 3 seconds
-                    setTimeout(function() {
-                        flashMessage.style.display = 'none';
-                    }, 3000);
+                        // Automatically hide after 3 seconds
+                        setTimeout(function() {
+                            flashMessage.style.display = 'none';
+                        }, 3000);
 
-                    // Or hide when clicked
-                    flashMessage.addEventListener('click', function() {
-                        flashMessage.style.display = 'none';
-                    });
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+                        // Or hide when clicked
+                        flashMessage.addEventListener('click', function() {
+                            flashMessage.style.display = 'none';
+                        });
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        });
     </script>
 </body>
 </html>

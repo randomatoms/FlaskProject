@@ -137,10 +137,13 @@ input[type="submit"]:hover {
 }
 .flash-message.error {
     background-color: #dc3545;  /* Red for error */
+    opacity: 90%;
 }
 .flash-message.success {
     background-color: #28a745;  /* Green for success */
+    opacity: 90%;
 }
 .flash-message.info {
     background-color: #17a2b8;  /* Blue for info */
+    opacity: 90%;
 }

@@ -280,11 +280,6 @@ def change_role(user_id):
         flash('User not found!', 'error')
     return redirect(url_for('manage_users'))
 
-@app.route('/test_flash')
-def test_flash():
-    flash('This is a test flash message!', 'success')
-    return redirect(url_for('home'))
-
 
 # Run the app if this script is executed directly
 if __name__ == '__main__':
