@@ -27,7 +27,7 @@ nav a:hover {
 }
 
 .background-svg {
-    background-image: url('/assets/Background_Vector.svg'); /* Path to your SVG file */
+    background-image: url(/static/assets/New_Vector.svg);
     z-index: -1;
     position: fixed;
     top: 0;
@@ -35,8 +35,9 @@ nav a:hover {
     bottom: 0;
     left: 0;
     margin: 0;
-    width: 100%; /* Ensure it covers the full width */
-    height: 100%; /* Ensure it covers the full height */
-    background-size: cover; /* Ensure the image covers the entire area */
-    background-repeat: no-repeat; /* Ensure no repeat of the image */
+    width: 100%;
+    height: 100%;
+    opacity: 40%;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
