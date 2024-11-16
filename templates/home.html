@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
 </head>
 <body>
-    
     <div class="background-svg"></div>
     <div class="raspbery-icon"></div>
     <div class="account-dropdown">
@@ -23,6 +22,7 @@
     </div>
 
     <h1>Welcome to Raspbery Pi</h1>
+
     <nav>
         <a href="{{ url_for('home') }}">Home</a>
         <a href="{{ url_for('about') }}">About</a>
@@ -30,6 +30,27 @@
         <a href="{{ url_for('login') }}">Login</a>
         <a href="{{ url_for('booking') }}">Booking</a>
     </nav>
+
+    <div class="row">
+        <div class="column">
+            <h3>What is CoderDojo?</h3>
+            <p>CoderDojo is a worldwide network of free programming clubs for young people aged 7–17. At each Dojo, young people learn to code, develop websites, build apps and games, and explore technology in a creative and collaborative environment</p>
+        </div>
+
+        <div class="column">
+            <h3>What will you do?</h3>
+            <p>Our events and lessons are designed to be hands-on, engaging, and tailored to different skill levels. Here’s what you can expect when you join us:</p>
+            <ul>
+                <li>Build real-world projects using Raspberry Pi, such as smart home devices or mini games.</li>
+                <li>Learn coding languages like Python, HTML and more through interactive challenges.</li>
+                <li>Experiment with hardware components like sensors, LEDs, and motors to bring ideas to life.</li>
+            </ul>
+        </div>
+
+        <div class="column">
+            <h3>Column 3</h3>
+        </div>
+    </div>
 
     <script src="{{ url_for('static', filename='home.js')}}"></script>
 </body>

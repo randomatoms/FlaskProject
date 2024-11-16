@@ -130,3 +130,24 @@ nav a:hover {
 .account-icon:hover{
     filter: invert(13%) sepia(59%) saturate(6997%) hue-rotate(357deg) brightness(79%) contrast(113%);
 }
+
+.column{
+    float: left;
+    width: calc(33.3% - 20px);
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #d16060;
+    border-radius: 9px;
+    margin: 10px;
+    height: 500px;
+}
+
+.row:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.row{
+    margin: 5% 0;
+}
