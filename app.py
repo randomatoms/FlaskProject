@@ -94,6 +94,10 @@ def load_user(user_id):
 def home():
     return render_template('home.html')
 
+@app.route('/settings')
+def settings():
+    return render_template('settings.html')
+
 @app.route('/about')
 def about():
     return render_template('about.html')

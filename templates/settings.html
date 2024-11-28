@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='settings.css') }}">
+</head>
+<body>
+    <div class="account-dropdown">
+        <div class="account-icon"></div>
+        <div class="dropdown-content">
+            {% if current_user.is_authenticated %}
+                <a href="#">{{ current_user.name }}</a>
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="settings-container">
+        <div class="settings-menu">
+            <ul>
+                <li onclick="showSection('account-settings')">Account Settings</li>
+                <li onclick="showSection('theme-settings')">Page Theme</li>
+            </ul>
+        </div>
+
+        <div class="settings-content">
+            <div id="account-settings" class="settings-section active">
+                <h2>Account Settings</h2>
+                <p><strong>Username:</strong> {{current_user.name}}</p>
+                <p><strong>Email:</strong> {{current_user.email}}</p>
+            </div>
+        </div>
+
+        <div id="theme-settings" class="settings-section">
+            <h2>Page Theme</h2>
+            <p>Select a theme for the page:</p>
+            <div class="form-group">
+                <label for="theme">Theme</label>
+                <select id="theme" onchange="changeTheme()">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='dropdown.js') }}"></script>
+    <script src="{{ url_for('static', filename='settings.js') }}"></script>
+</body>
+</html>
