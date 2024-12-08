@@ -9,22 +9,32 @@ function showSection(sectionId) {
     document.getElementById(sectionId).classList.add('active');
 }
 
+// Function to change theme and save the choice
 function changeTheme() {
     var theme = document.getElementById('theme').value;
-    if (theme == 'dark') {
+
+    if (theme === 'dark') {
         document.body.classList.add('dark-mode');
         document.body.classList.remove('light-mode');
+        localStorage.setItem('theme', 'dark'); // Save the choice to localStorage
     } else {
         document.body.classList.add('light-mode');
         document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light'); // Save the choice to localStorage
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    var theme = 'light';
-    if (theme == 'dark') {
+// Load the theme on page load
+document.addEventListener('DOMContentLoaded', function () {
+    var savedTheme = localStorage.getItem('theme'); // Retrieve the saved theme from localStorage
+
+    if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
+        document.body.classList.remove('light-mode');
+        document.getElementById('theme').value = 'dark'; // Set dropdown to dark
     } else {
-        document.body.classList.remove('light-mode')
+        document.body.classList.add('light-mode');
+        document.body.classList.remove('dark-mode');
+        document.getElementById('theme').value = 'light'; // Set dropdown to light
     }
-})
+});
